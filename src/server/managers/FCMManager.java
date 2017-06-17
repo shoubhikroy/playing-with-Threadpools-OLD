@@ -1,26 +1,18 @@
 package server.managers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import de.bytefish.fcmjava.client.FcmClient;
 import de.bytefish.fcmjava.client.settings.PropertiesBasedSettings;
 import de.bytefish.fcmjava.model.options.FcmMessageOptions;
-import de.bytefish.fcmjava.model.topics.Topic;
-import de.bytefish.fcmjava.requests.builders.NotificationPayloadBuilder;
 import de.bytefish.fcmjava.requests.data.DataUnicastMessage;
 import de.bytefish.fcmjava.requests.notification.NotificationPayload;
-import de.bytefish.fcmjava.requests.notification.NotificationUnicastMessage;
-import de.bytefish.fcmjava.requests.topic.TopicUnicastMessage;
 import de.bytefish.fcmjava.responses.FcmMessageResponse;
 import de.bytefish.fcmjava.responses.FcmMessageResultItem;
-import de.bytefish.fcmjava.responses.TopicMessageResponse;
 import org.junit.Assert;
 import org.junit.Test;
-import server.model.KeyValuePair;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

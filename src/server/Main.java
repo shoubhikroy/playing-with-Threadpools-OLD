@@ -1,26 +1,11 @@
 package server;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import de.bytefish.fcmjava.client.FcmClient;
-import de.bytefish.fcmjava.client.settings.PropertiesBasedSettings;
-import de.bytefish.fcmjava.model.options.FcmMessageOptions;
-import de.bytefish.fcmjava.model.topics.Topic;
-import de.bytefish.fcmjava.requests.notification.NotificationUnicastMessage;
-import de.bytefish.fcmjava.requests.topic.TopicUnicastMessage;
-import de.bytefish.fcmjava.responses.TopicMessageResponse;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.junit.Assert;
-import org.junit.Test;
 import server.serverBase.Server;
 
-import javax.xml.ws.Endpoint;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.Duration;
 
 public class Main
 {

@@ -4,10 +4,6 @@ package server.serverBase;
 import server.connectors.pushHandler;
 import server.connectors.soapHandler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 public class Server
 {
     public Server()
