@@ -1,4 +1,4 @@
-package server.model;
+package server.rpc;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

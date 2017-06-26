@@ -1,6 +1,6 @@
 package server.connectors;
 
-import server.model.RemoteCallsImpl;
+import server.rpc.RemoteCallsImpl;
 
 import javax.xml.ws.Endpoint;
 

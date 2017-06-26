@@ -1,9 +1,9 @@
-package server.model;
+package server.rpc;
 
 import javax.jws.WebService;
 
 //Service Implementation
-@WebService(endpointInterface = "server.model.RemoteCalls")
+@WebService(endpointInterface = "server.rpc.RemoteCalls")
 public class RemoteCallsImpl implements RemoteCalls
 {
 
