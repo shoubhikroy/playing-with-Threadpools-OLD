@@ -31,19 +31,22 @@ public class Server
         //BoneCP Connection Pool:
         Class.forName("com.mysql.jdbc.Driver");
         config = new BoneCPConfig();
-        config.setJdbcUrl("jdbc:mysql://104.236.229.251:3306/card?useSSL=false");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/card?useSSL=false");
         config.setUsername("XAR");
         config.setPassword("barb");
         cp = ConnectionPool.getInstance();
         cp.setConnectionPool(new BoneCP(config));
+        logger.info("created connection pool");
 
         //RPC Callable Pool:
         rp = RPCThreadPool.getInstance();
         rp.setThreadPool(Executors.newFixedThreadPool(5));
+        logger.info("created RPCThreadPool");
 
         //FCM Runnable Pool:
         fp = FCMThreadPool.getInstance();
         fp.setThreadPool(Executors.newFixedThreadPool(5));
+        logger.info("created FCMThreadPool");
     }
 
     public void start() throws IOException
@@ -55,20 +58,25 @@ public class Server
         boolean flag = true;
         while (flag)
         {
-            logger.info("Input Command: ");
+            System.out.println("Input Command: ");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String command = br.readLine();
             switch (command)
             {
                 case "help":
-                    logger.info("Available Commands:");
+                    System.out.println("Available Commands:");
+                    System.out.println("shutdown - close pools and exit:");
+                    break;
+                case "shutdown":
+                    flag = false;
                     break;
                 default:
-                    logger.info("Invalid Command.");
+                    System.out.println("Invalid Command.");
             }
         }
         cp.getConnectionPool().shutdown();
         rp.getThreadPool().shutdown();
         fp.getThreadPool().shutdown();
+        System.exit(0);
     }
 }

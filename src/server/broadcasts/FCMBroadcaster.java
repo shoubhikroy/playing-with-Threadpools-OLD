@@ -19,7 +19,7 @@ public class FCMBroadcaster
 {
     private static FCMBroadcaster ourInstance = new FCMBroadcaster();
     FcmMessageOptions options;
-    String defaultPropertiesLocationString = System.getProperty("user.home") + "/fcmjava.properties";
+    String defaultPropertiesLocationString = /*System.getProperty("user.home") + */"fcmjava.properties";
     Path defaultPropertiesLocationPath = FileSystems.getDefault().getPath(defaultPropertiesLocationString, new String[0]);
     FcmClient client;
     private FCMBroadcaster()
