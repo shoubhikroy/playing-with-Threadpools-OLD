@@ -3,6 +3,8 @@ package server.serverBase;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import server.jaxws.JAXWSEndpoint;
 import server.cache.FCMThreadPool;
 import server.cache.RPCThreadPool;
@@ -20,6 +22,7 @@ public class Server
     ConnectionPool cp;
     RPCThreadPool rp;
     FCMThreadPool fp;
+    Logger logger = LoggerFactory.getLogger(Server.class);
 
     public Server() throws ClassNotFoundException, SQLException
     {
@@ -53,16 +56,16 @@ public class Server
         boolean flag = true;
         while (flag)
         {
-            System.out.println("Input Command: ");
+            logger.info("Input Command: ");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String command = br.readLine();
             switch (command)
             {
                 case "help":
-                    System.out.println("Available Commands:");
+                    logger.info("Available Commands:");
                     break;
                 default:
-                    System.out.println("Invalid Command.");
+                    logger.info("Invalid Command.");
             }
         }
         cp.getConnectionPool().shutdown();

@@ -2,6 +2,8 @@ package server.model.templates;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import server.cache.ConnectionPool;
 
 import java.sql.ResultSet;
@@ -14,6 +16,7 @@ public abstract class ObjectDao
     protected Integer userId = 0;
     protected ResultSet rs;
     protected int resLength = 0;
+    protected Logger logger = LoggerFactory.getLogger(ObjectDao.class);
 
     protected void _create(String select) throws SQLException
     {
@@ -26,7 +29,7 @@ public abstract class ObjectDao
             userId = rs.getInt("userId");
         }
         userId = userId + 1;
-        System.out.println("Select statement executed, " + userId + " rows retrieved");
+        logger.info("Select statement executed, " + userId + " rows retrieved");
         preparedStatement.close();
         dbcon.close();
     }
@@ -43,7 +46,7 @@ public abstract class ObjectDao
         rs = preparedStatement.executeQuery();
         preparedStatement.close();
         dbcon.close();
-        System.out.println("Select statement executed, " + resLength + " rows retrieved");
+        logger.info("Select statement executed, " + resLength + " rows retrieved");
     }
 
     public void _AllUsers(String select) throws SQLException
@@ -52,7 +55,7 @@ public abstract class ObjectDao
         preparedStatement = (PreparedStatement) dbcon.prepareStatement(select);
         resLength = 0;
         rs = preparedStatement.executeQuery();
-        System.out.println("Select statement executed, " + resLength + " rows retrieved");
+        logger.info("Select statement executed, " + resLength + " rows retrieved");
 
         //close everything
         preparedStatement.close();

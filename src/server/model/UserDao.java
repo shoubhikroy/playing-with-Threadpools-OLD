@@ -79,7 +79,7 @@ public class UserDao extends ObjectDao
                 resLength++;
                 user = new User(userId, rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses"));
             }
-            System.out.println("Select statement executed, " + resLength + " rows retrieved");
+            logger.info("Select statement executed, " + resLength + " rows retrieved");
 
             //close everything
             preparedStatement.close();
@@ -106,7 +106,7 @@ public class UserDao extends ObjectDao
         {
             userId = rs.getInt("userId");
         }
-        System.out.println("Select statement executed, " + resLength + " rows retrieved");
+        logger.info("Select statement executed, " + resLength + " rows retrieved");
 
         //close everything
         preparedStatement.close();
@@ -128,7 +128,7 @@ public class UserDao extends ObjectDao
         {
             userId = rs.getInt("userId");
         }
-        System.out.println("Select statement executed, " + resLength + " rows retrieved");
+        logger.info("Select statement executed, " + resLength + " rows retrieved");
 
         //close everything
         preparedStatement.close();
@@ -152,7 +152,7 @@ public class UserDao extends ObjectDao
         {
             userid = rs.getInt("userid");
         }
-        System.out.println("Select statement executed, " + resLength + " rows retrieved");
+        logger.info("Select statement executed, " + resLength + " rows retrieved");
 
         //close everything
         preparedStatement.close();

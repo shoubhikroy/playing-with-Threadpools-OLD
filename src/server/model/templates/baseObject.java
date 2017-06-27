@@ -2,6 +2,8 @@ package server.model.templates;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import server.cache.ConnectionPool;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ public abstract class baseObject implements Serializable
     protected PreparedStatement preparedStatement;
     Connection dbcon;
     protected Integer userId = 0;
+    Logger logger = LoggerFactory.getLogger(baseObject.class);
 
     static final long serialVersionUID = 42L;
 
@@ -39,7 +42,7 @@ public abstract class baseObject implements Serializable
     protected void save_() throws SQLException
     {
         preparedStatement.executeUpdate();
-        System.out.println("user saved");
+        logger.info("user saved");
 
         preparedStatement.close();
         dbcon.close();
@@ -54,7 +57,7 @@ public abstract class baseObject implements Serializable
     protected void create_() throws SQLException
     {
         preparedStatement.executeUpdate();
-        System.out.println("user added");
+        logger.info("user added");
 
         preparedStatement.close();
         dbcon.close();
@@ -69,7 +72,7 @@ public abstract class baseObject implements Serializable
     protected void delete_() throws SQLException
     {
         preparedStatement.executeUpdate();
-        System.out.println("user deleted");
+        logger.info("user deleted");
 
         preparedStatement.close();
         dbcon.close();

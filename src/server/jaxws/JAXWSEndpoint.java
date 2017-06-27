@@ -1,10 +1,14 @@
 package server.jaxws;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.ws.Endpoint;
 
 public class JAXWSEndpoint implements Runnable
 {
     Thread runner;
+    Logger logger = LoggerFactory.getLogger(JAXWSEndpoint.class);
 
     public JAXWSEndpoint()
     {
@@ -13,13 +17,13 @@ public class JAXWSEndpoint implements Runnable
     public JAXWSEndpoint(String threadName)
     {
         runner = new Thread(this, threadName);
-        System.out.println(runner.getName());
+        logger.info(runner.getName());
         runner.start();
     }
 
     public void run()
     {
-        System.out.println("Attached Soap End Point");
+        logger.info("Attached Soap End Point");
         //Endpoint.publish("http://egfyz29u.xyz:9999/ws/hello", new RemoteCallsImpl());
         Endpoint.publish("http://localhost:9999/ws/hello", new RemoteCallsImpl());
     }
