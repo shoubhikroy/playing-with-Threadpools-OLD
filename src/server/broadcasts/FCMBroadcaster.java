@@ -8,35 +8,30 @@ import de.bytefish.fcmjava.responses.FcmMessageResponse;
 import server.broadcasts.casts.*;
 import server.cache.FCMThreadPool;
 
-import javax.management.Notification;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
 
 public class FCMBroadcaster
 {
     private static FCMBroadcaster ourInstance = new FCMBroadcaster();
-
-    public static FCMBroadcaster getInstance()
-    {
-        return ourInstance;
-    }
-
     FcmMessageOptions options;
-
+    String defaultPropertiesLocationString = System.getProperty("user.home") + "/fcmjava.properties";
+    Path defaultPropertiesLocationPath = FileSystems.getDefault().getPath(defaultPropertiesLocationString, new String[0]);
+    FcmClient client;
     private FCMBroadcaster()
     {
         client = new FcmClient(PropertiesBasedSettings.createFromFile(defaultPropertiesLocationPath, StandardCharsets.UTF_8));
         options = FcmMessageOptions.builder().build();
     }
 
-    String defaultPropertiesLocationString = System.getProperty("user.home") + "/fcmjava.properties";
-    Path defaultPropertiesLocationPath = FileSystems.getDefault().getPath(defaultPropertiesLocationString, new String[0]);
+    public static FCMBroadcaster getInstance()
+    {
+        return ourInstance;
+    }
 
     public FcmClient getClient()
     {
@@ -47,8 +42,6 @@ public class FCMBroadcaster
     {
         this.client = client;
     }
-
-    FcmClient client;
 
     public FcmMessageResponse sendDataUnicastMsg(String to, Map<String, String> data) throws InterruptedException, ExecutionException
     {

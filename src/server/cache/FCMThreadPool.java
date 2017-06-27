@@ -5,17 +5,16 @@ import java.util.concurrent.ExecutorService;
 public class FCMThreadPool
 {
     private static FCMThreadPool ourInstance = new FCMThreadPool();
-
-    public static FCMThreadPool getInstance()
-    {
-        return ourInstance;
-    }
+    ExecutorService threadPool;
 
     private FCMThreadPool()
     {
     }
 
-    ExecutorService threadPool;
+    public static FCMThreadPool getInstance()
+    {
+        return ourInstance;
+    }
 
     public ExecutorService getThreadPool()
     {

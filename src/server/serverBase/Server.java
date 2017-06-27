@@ -5,10 +5,10 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import server.jaxws.JAXWSEndpoint;
+import server.cache.ConnectionPool;
 import server.cache.FCMThreadPool;
 import server.cache.RPCThreadPool;
-import server.cache.ConnectionPool;
+import server.jaxws.JAXWSEndpoint;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +23,7 @@ public class Server
     RPCThreadPool rp;
     FCMThreadPool fp;
     Logger logger = LoggerFactory.getLogger(Server.class);
+    private Thread jaxws;
 
     public Server() throws ClassNotFoundException, SQLException
     {
@@ -44,8 +45,6 @@ public class Server
         fp = FCMThreadPool.getInstance();
         fp.setThreadPool(Executors.newFixedThreadPool(5));
     }
-
-    private Thread jaxws;
 
     public void start() throws IOException
     {

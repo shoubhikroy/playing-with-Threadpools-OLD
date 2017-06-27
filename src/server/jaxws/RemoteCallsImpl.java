@@ -1,15 +1,12 @@
 package server.jaxws;
 
+import server.cache.RPCThreadPool;
 import server.jaxws.beans.RegisterLoginInfo;
 import server.jaxws.beans.RegisterLoginResult;
-import server.cache.RPCThreadPool;
 import server.jaxws.calls.registerLogin;
 
 import javax.jws.WebService;
-import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.Future;
 
 //Service Implementation
 @WebService(endpointInterface = "server.jaxws.RemoteCalls")

@@ -5,13 +5,16 @@ import com.jolbox.bonecp.BoneCP;
 public class ConnectionPool
 {
     private static ConnectionPool ourInstance = new ConnectionPool();
+    BoneCP connectionPool;
+
+    private ConnectionPool()
+    {
+    }
 
     public static ConnectionPool getInstance()
     {
         return ourInstance;
     }
-
-    BoneCP connectionPool;
 
     public BoneCP getConnectionPool()
     {
@@ -21,9 +24,5 @@ public class ConnectionPool
     public void setConnectionPool(BoneCP connectionPool)
     {
         this.connectionPool = connectionPool;
-    }
-
-    private ConnectionPool()
-    {
     }
 }

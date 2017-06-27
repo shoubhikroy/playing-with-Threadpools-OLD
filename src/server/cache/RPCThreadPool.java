@@ -5,17 +5,16 @@ import java.util.concurrent.ExecutorService;
 public class RPCThreadPool
 {
     private static RPCThreadPool ourInstance = new RPCThreadPool();
-
-    public static RPCThreadPool getInstance()
-    {
-        return ourInstance;
-    }
+    ExecutorService threadPool;
 
     private RPCThreadPool()
     {
     }
 
-    ExecutorService threadPool;
+    public static RPCThreadPool getInstance()
+    {
+        return ourInstance;
+    }
 
     public ExecutorService getThreadPool()
     {

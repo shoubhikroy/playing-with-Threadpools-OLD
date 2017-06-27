@@ -11,12 +11,11 @@ import java.sql.SQLException;
 
 public abstract class baseObject implements Serializable
 {
-    protected PreparedStatement preparedStatement;
-    Connection dbcon;
-    protected Integer userId = 0;
-    Logger logger = LoggerFactory.getLogger(baseObject.class);
-
     static final long serialVersionUID = 42L;
+    protected PreparedStatement preparedStatement;
+    protected Integer userId = 0;
+    Connection dbcon;
+    Logger logger = LoggerFactory.getLogger(baseObject.class);
 
     protected baseObject()
     {

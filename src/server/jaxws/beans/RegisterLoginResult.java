@@ -19,6 +19,11 @@ public class RegisterLoginResult
         return key;
     }
 
+    public void setKey(String key)
+    {
+        this.key = key;
+    }
+
     public boolean isSuccessFlag()
     {
         return successFlag;
@@ -27,10 +32,5 @@ public class RegisterLoginResult
     public void setSuccessFlag(boolean successFlag)
     {
         this.successFlag = successFlag;
-    }
-
-    public void setKey(String key)
-    {
-        this.key = key;
     }
 }

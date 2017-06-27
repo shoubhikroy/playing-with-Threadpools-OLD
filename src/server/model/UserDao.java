@@ -1,9 +1,8 @@
 package server.model;
 
+import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import server.cache.ConnectionPool;
-
-import com.mysql.jdbc.Connection;
 import server.model.templates.ObjectDao;
 
 import java.sql.SQLException;
@@ -13,13 +12,13 @@ public class UserDao extends ObjectDao
 {
     private static UserDao ourInstance = new UserDao();
 
+    private UserDao()
+    {
+    }
+
     public static UserDao getInstance()
     {
         return ourInstance;
-    }
-
-    private UserDao()
-    {
     }
 
     public User createUser(String username, String password, String fcmkey, int wins, int losses) throws SQLException
