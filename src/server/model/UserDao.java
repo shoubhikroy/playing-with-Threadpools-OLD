@@ -6,7 +6,6 @@ import server.cache.ConnectionPool;
 import com.mysql.jdbc.Connection;
 import server.model.templates.ObjectDao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 

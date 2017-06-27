@@ -1,18 +1,16 @@
-package server.connectors;
-
-import server.rpc.RemoteCallsImpl;
+package server.jaxws;
 
 import javax.xml.ws.Endpoint;
 
-public class jaxws implements Runnable
+public class JAXWSEndpoint implements Runnable
 {
     Thread runner;
 
-    public jaxws()
+    public JAXWSEndpoint()
     {
     }
 
-    public jaxws(String threadName)
+    public JAXWSEndpoint(String threadName)
     {
         runner = new Thread(this, threadName);
         System.out.println(runner.getName());

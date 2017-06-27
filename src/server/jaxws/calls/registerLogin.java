@@ -1,7 +1,7 @@
-package server.rpc.calls;
+package server.jaxws.calls;
 
-import server.beans.RegisterLoginInfo;
-import server.beans.RegisterLoginResult;
+import server.jaxws.beans.RegisterLoginInfo;
+import server.jaxws.beans.RegisterLoginResult;
 
 import java.util.concurrent.Callable;
 

@@ -2,16 +2,16 @@ package server.cache;
 
 import java.util.concurrent.ExecutorService;
 
-public class RPCPool
+public class RPCThreadPool
 {
-    private static RPCPool ourInstance = new RPCPool();
+    private static RPCThreadPool ourInstance = new RPCThreadPool();
 
-    public static RPCPool getInstance()
+    public static RPCThreadPool getInstance()
     {
         return ourInstance;
     }
 
-    private RPCPool()
+    private RPCThreadPool()
     {
     }
 

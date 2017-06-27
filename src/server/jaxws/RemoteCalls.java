@@ -1,7 +1,7 @@
-package server.rpc;
+package server.jaxws;
 
-import server.beans.RegisterLoginInfo;
-import server.beans.RegisterLoginResult;
+import server.jaxws.beans.RegisterLoginInfo;
+import server.jaxws.beans.RegisterLoginResult;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

@@ -4,7 +4,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import server.cache.ConnectionPool;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

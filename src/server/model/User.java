@@ -1,8 +1,5 @@
 package server.model;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import server.cache.ConnectionPool;
 import server.model.templates.baseObject;
 
 import java.sql.SQLException;

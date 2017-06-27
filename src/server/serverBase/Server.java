@@ -3,9 +3,9 @@ package server.serverBase;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
-import server.cache.RPCPool;
-import server.connectors.jaxws;
-import server.connectors.pushHandler;
+import server.jaxws.JAXWSEndpoint;
+import server.cache.FCMThreadPool;
+import server.cache.RPCThreadPool;
 import server.cache.ConnectionPool;
 
 import java.io.BufferedReader;
@@ -14,11 +14,12 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
 
-public class Server implements Runnable
+public class Server
 {
     BoneCPConfig config;
     ConnectionPool cp;
-    RPCPool rp;
+    RPCThreadPool rp;
+    FCMThreadPool fp;
 
     public Server() throws ClassNotFoundException, SQLException
     {
@@ -33,20 +34,20 @@ public class Server implements Runnable
         cp.setConnectionPool(new BoneCP(config));
 
         //RPC Callable Pool:
-        rp = RPCPool.getInstance();
+        rp = RPCThreadPool.getInstance();
         rp.setThreadPool(Executors.newFixedThreadPool(5));
+
+        //FCM Runnable Pool:
+        fp = FCMThreadPool.getInstance();
+        fp.setThreadPool(Executors.newFixedThreadPool(5));
     }
 
     private Thread jaxws;
-    private Thread sendMsg;
 
     public void start() throws IOException
     {
-        Thread jaxws = new Thread(new jaxws(), "jaxws");
-        Thread pushHandler = new Thread(new pushHandler(), "pushHandler");
-
+        jaxws = new Thread(new JAXWSEndpoint(), "JAXWSEndpoint");
         jaxws.start();
-        //pushHandler.start();
 
         System.out.println(Thread.currentThread());
         boolean flag = true;
@@ -65,11 +66,5 @@ public class Server implements Runnable
             }
         }
         cp.getConnectionPool().shutdown();
-    }
-
-    @Override
-    public void run()
-    {
-
     }
 }

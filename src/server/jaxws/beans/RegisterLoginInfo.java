@@ -1,4 +1,4 @@
-package server.beans;
+package server.jaxws.beans;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RegisterLoginInfo")
 public class RegisterLoginInfo
 {
+    @XmlElement(name = "key")
+    protected String key;
     @XmlElement(name = "userName")
     protected String userName;
     @XmlElement(name = "password")
     protected String password;
-    @XmlElement(name = "key")
-    protected String key;
 
     public String getKey()
     {
