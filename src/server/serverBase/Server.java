@@ -58,20 +58,20 @@ public class Server
         boolean flag = true;
         while (flag)
         {
-            System.out.println("Input Command: ");
+            logger.info("Input Command: ");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String command = br.readLine();
             switch (command)
             {
                 case "help":
-                    System.out.println("Available Commands:");
-                    System.out.println("shutdown - close pools and exit:");
+                    logger.info("Available Commands:");
+                    logger.info("shutdown - close pools and exit:");
                     break;
                 case "shutdown":
                     flag = false;
                     break;
                 default:
-                    System.out.println("Invalid Command.");
+                    logger.info("Invalid Command.");
             }
         }
         cp.getConnectionPool().shutdown();
