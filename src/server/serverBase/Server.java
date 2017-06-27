@@ -66,5 +66,7 @@ public class Server
             }
         }
         cp.getConnectionPool().shutdown();
+        rp.getThreadPool().shutdown();
+        fp.getThreadPool().shutdown();
     }
 }

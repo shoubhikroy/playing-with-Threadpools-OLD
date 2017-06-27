@@ -3,15 +3,16 @@ package server.broadcasts;
 import de.bytefish.fcmjava.client.FcmClient;
 import de.bytefish.fcmjava.client.settings.PropertiesBasedSettings;
 import de.bytefish.fcmjava.model.options.FcmMessageOptions;
+import de.bytefish.fcmjava.requests.notification.NotificationPayload;
 import de.bytefish.fcmjava.responses.FcmMessageResponse;
-import server.broadcasts.casts.DataUnicastMsg;
-import server.broadcasts.casts.DataUnicastNotificationMsg;
+import server.broadcasts.casts.*;
 import server.cache.FCMThreadPool;
 
 import javax.management.Notification;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
@@ -51,15 +52,67 @@ public class FCMBroadcaster
 
     public FcmMessageResponse sendDataUnicastMsg(String to, Map<String, String> data) throws InterruptedException, ExecutionException
     {
-        CompletionService<FcmMessageResponse> pool = new ExecutorCompletionService<>(FCMThreadPool.getInstance().getThreadPool());
-        pool.submit(new DataUnicastMsg(options, to, data));
-        return pool.take().get();
+        return FCMThreadPool.getInstance().getThreadPool().submit(new DataUnicastMsg(options, to, data)).get();
     }
 
-    public FcmMessageResponse sendDataUnicastNotificationMsg(String to, Map<String, String> data, Notification np) throws InterruptedException, ExecutionException
+    private FcmMessageResponse sendDataUnicastNotificationMsg(String to, Map<String, String> data, NotificationPayload np) throws InterruptedException, ExecutionException
     {
-        CompletionService<FcmMessageResponse> pool = new ExecutorCompletionService<>(FCMThreadPool.getInstance().getThreadPool());
-        pool.submit(new DataUnicastNotificationMsg(options, to, data, np));
-        return pool.take().get();
+        return FCMThreadPool.getInstance().getThreadPool().submit(new DataUnicastNotificationMsg(options, to, data, np)).get();
+    }
+
+    protected FcmMessageResponse sendDataUnicastNotificationMsg(String to, Map<String, String> data, String title, String body) throws ExecutionException, InterruptedException
+    {
+        NotificationPayload np = NotificationPayload.builder()
+                .setTitle(title)
+                .setBody(body)
+                .build();
+        return sendDataUnicastNotificationMsg(to, data, np);
+    }
+
+    public FcmMessageResponse sendDataMulticastMsg(List<String> keySet, Map<String, String> data) throws InterruptedException, ExecutionException
+    {
+        return FCMThreadPool.getInstance().getThreadPool().submit(new DataMulticastMsg(options, keySet, data)).get();
+    }
+
+    private FcmMessageResponse sendDataMulticastNotificationMsg(List<String> keySet, Map<String, String> data, NotificationPayload np) throws InterruptedException, ExecutionException
+    {
+        return FCMThreadPool.getInstance().getThreadPool().submit(new DataMulticastNotificationMsg(options, keySet, data, np)).get();
+    }
+
+    public FcmMessageResponse sendDataMulticastNotificationMsg(List<String> keySet, Map<String, String> data, String title, String body) throws ExecutionException, InterruptedException
+    {
+        NotificationPayload np = NotificationPayload.builder()
+                .setTitle(title)
+                .setBody(body)
+                .build();
+        return sendDataMulticastNotificationMsg(keySet, data, np);
+    }
+
+    private FcmMessageResponse sendNotificationUnicastMsg(String to, NotificationPayload notificationPayload) throws InterruptedException, ExecutionException
+    {
+        return FCMThreadPool.getInstance().getThreadPool().submit(new NotificationUnicastMsg(options, to, notificationPayload)).get();
+    }
+
+    public FcmMessageResponse sendNotificationUnicastMsg(String to, String title, String body) throws ExecutionException, InterruptedException
+    {
+        NotificationPayload np = NotificationPayload.builder()
+                .setTitle(title)
+                .setBody(body)
+                .build();
+        return sendNotificationUnicastMsg(to, np);
+    }
+
+    private FcmMessageResponse sendNotificationMulticastNotificationMsg(List<String> keySet, NotificationPayload notificationPayload) throws InterruptedException, ExecutionException
+    {
+        return FCMThreadPool.getInstance().getThreadPool().submit(new NotificationMulticastNotificationMsg(options, keySet, notificationPayload)).get();
+    }
+
+    public FcmMessageResponse sendNotificationMulticastNotificationMsg(List<String> keySet, String title, String body) throws ExecutionException, InterruptedException
+    {
+        NotificationPayload np = NotificationPayload.builder()
+                .setTitle(title)
+                .setBody(body)
+                .build();
+        return sendNotificationMulticastNotificationMsg(keySet, np);
     }
 }
