@@ -22,6 +22,7 @@ public class jaxws implements Runnable
     public void run()
     {
         System.out.println("Attached Soap End Point");
-        Endpoint.publish("http://egfyz29u.xyz:9999/ws/hello", new RemoteCallsImpl());
+        //Endpoint.publish("http://egfyz29u.xyz:9999/ws/hello", new RemoteCallsImpl());
+        Endpoint.publish("http://localhost:9999/ws/hello", new RemoteCallsImpl());
     }
 }

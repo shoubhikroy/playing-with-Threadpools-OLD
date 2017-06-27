@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RegisterLoginInfo")
+@XmlType(name = "RegisterLoginResult")
 public class RegisterLoginResult
 {
     @XmlElement(name = "key")

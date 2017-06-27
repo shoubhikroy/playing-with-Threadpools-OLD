@@ -3,6 +3,7 @@ package server.serverBase;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import server.cache.RPCPool;
 import server.connectors.jaxws;
 import server.connectors.pushHandler;
 import server.cache.ConnectionPool;
@@ -11,14 +12,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.concurrent.Executors;
 
 public class Server implements Runnable
 {
     BoneCPConfig config;
     ConnectionPool cp;
+    RPCPool rp;
 
     public Server() throws ClassNotFoundException, SQLException
     {
+        //SETUP RELEVANT POOLS:
+        //BoneCP Connection Pool:
         Class.forName("com.mysql.jdbc.Driver");
         config = new BoneCPConfig();
         config.setJdbcUrl("jdbc:mysql://104.236.229.251:3306/card?useSSL=false");
@@ -26,6 +31,10 @@ public class Server implements Runnable
         config.setPassword("barb");
         cp = ConnectionPool.getInstance();
         cp.setConnectionPool(new BoneCP(config));
+
+        //RPC Callable Pool:
+        rp = RPCPool.getInstance();
+        rp.setThreadPool(Executors.newFixedThreadPool(5));
     }
 
     private Thread jaxws;
@@ -36,8 +45,8 @@ public class Server implements Runnable
         Thread jaxws = new Thread(new jaxws(), "jaxws");
         Thread pushHandler = new Thread(new pushHandler(), "pushHandler");
 
-        //jaxws.start();
-        pushHandler.start();
+        jaxws.start();
+        //pushHandler.start();
 
         System.out.println(Thread.currentThread());
         boolean flag = true;
