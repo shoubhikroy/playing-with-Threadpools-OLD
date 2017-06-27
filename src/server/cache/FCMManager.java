@@ -1,4 +1,4 @@
-package server.managers;
+package server.cache;
 
 import de.bytefish.fcmjava.client.FcmClient;
 import de.bytefish.fcmjava.client.settings.PropertiesBasedSettings;

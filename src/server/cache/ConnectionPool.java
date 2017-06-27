@@ -1,4 +1,4 @@
-package server.managers;
+package server.cache;
 
 import com.jolbox.bonecp.BoneCP;
 

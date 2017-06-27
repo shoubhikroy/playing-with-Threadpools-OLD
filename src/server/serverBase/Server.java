@@ -5,7 +5,7 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import server.connectors.jaxws;
 import server.connectors.pushHandler;
-import server.managers.ConnectionPool;
+import server.cache.ConnectionPool;
 
 import java.io.BufferedReader;
 import java.io.IOException;

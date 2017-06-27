@@ -1,5 +1,8 @@
 package server.rpc;
 
+import server.beans.RegisterLoginInfo;
+import server.beans.RegisterLoginResult;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -12,6 +15,6 @@ public interface RemoteCalls
 {
 
     @WebMethod
-    String getHelloWorldAsString(String name);
+    RegisterLoginResult registerLogin(RegisterLoginInfo li);
 
 }

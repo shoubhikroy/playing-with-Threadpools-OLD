@@ -1,5 +1,8 @@
 package server.rpc;
 
+import server.beans.RegisterLoginInfo;
+import server.beans.RegisterLoginResult;
+
 import javax.jws.WebService;
 
 //Service Implementation
@@ -8,9 +11,9 @@ public class RemoteCallsImpl implements RemoteCalls
 {
 
     @Override
-    public String getHelloWorldAsString(String name)
+    public RegisterLoginResult registerLogin(RegisterLoginInfo li)
     {
-        return "Hello World JAX-WS " + name;
+        return null;
     }
 
 }

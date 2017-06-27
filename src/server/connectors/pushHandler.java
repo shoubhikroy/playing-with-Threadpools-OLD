@@ -1,6 +1,6 @@
 package server.connectors;
 
-import server.managers.FCMManager;
+import server.cache.FCMManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
