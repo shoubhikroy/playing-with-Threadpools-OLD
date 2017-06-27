@@ -4,15 +4,15 @@ import server.rpc.RemoteCallsImpl;
 
 import javax.xml.ws.Endpoint;
 
-public class soapHandler implements Runnable
+public class jaxws implements Runnable
 {
     Thread runner;
 
-    public soapHandler()
+    public jaxws()
     {
     }
 
-    public soapHandler(String threadName)
+    public jaxws(String threadName)
     {
         runner = new Thread(this, threadName);
         System.out.println(runner.getName());
@@ -21,7 +21,7 @@ public class soapHandler implements Runnable
 
     public void run()
     {
-        System.out.println("Started Soap Handler");
+        System.out.println("Attached Soap End Point");
         Endpoint.publish("http://egfyz29u.xyz:9999/ws/hello", new RemoteCallsImpl());
     }
 }
