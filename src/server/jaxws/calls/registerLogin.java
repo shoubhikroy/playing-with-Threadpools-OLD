@@ -34,9 +34,12 @@ public class registerLogin implements Callable<RegisterLoginResult>
         //if new user
         if (null == user)
         {
-            //create user
-            user = userDao.createUser(username, password, fcmkey, 0, 0);
-            rlr.setSuccessFlag(true);
+            if (userDao.checkUserExistsReturnId(username) == -1)
+            {
+                //create user
+                user = userDao.createUser(username, password, fcmkey, 0, 0);
+                rlr.setSuccessFlag(true);
+            }
         }
         //if user exists
         else
