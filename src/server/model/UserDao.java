@@ -87,7 +87,7 @@ public class UserDao extends ObjectDao
         return user;
     }
 
-    protected Integer checkUserExistsReturnId(String username, String password) throws SQLException
+    public Integer checkUserExistsReturnId(String username, String password) throws SQLException
     {
         if (checkUserExistsReturnId(username) != -1)
             return checkUserExistsReturnId(username);
@@ -113,7 +113,7 @@ public class UserDao extends ObjectDao
         return userId == -1 ? -1 : userId;
     }
 
-    protected Integer checkUserExistsReturnId(String username) throws SQLException
+    public Integer checkUserExistsReturnId(String username) throws SQLException
     {
         dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool();
         String selectString = "select userId from t_user where username = ?;\n";
