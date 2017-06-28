@@ -24,7 +24,7 @@ public class JAXWSEndpoint implements Runnable
     public void run()
     {
         logger.info("Attached Soap End Point");
-        Endpoint.publish("http://egfyz29u.xyz:9999/ws/hello", new RemoteCallsImpl());
-        //Endpoint.publish("http://localhost:9999/ws/hello", new RemoteCallsImpl());
+        //Endpoint.publish("http://egfyz29u.xyz:9999/ws/rpc", new RemoteCallsImpl());
+        Endpoint.publish("http://egfyz29u.xyz:9999/ws/rpc", new RemoteCallsImpl());
     }
 }

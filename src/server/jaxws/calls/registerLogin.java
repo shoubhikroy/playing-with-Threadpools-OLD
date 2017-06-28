@@ -30,7 +30,7 @@ public class registerLogin implements Callable<RegisterLoginResult>
 
         //check if user exists
         UserDao userDao = UserDao.getInstance();
-        User user = userDao.getUserByUsernamePassword(username, password);
+        User user = userDao.getUserById(userDao.checkUserExistsReturnId(username, password));
         //if new user
         if (null == user)
         {
