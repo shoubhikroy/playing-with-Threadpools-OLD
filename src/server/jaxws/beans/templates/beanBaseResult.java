@@ -1,16 +1,12 @@
-package server.jaxws.beans;
+package server.jaxws.beans.templates;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RegisterLoginResult")
-public class RegisterLoginResult
+public abstract class beanBaseResult
 {
     @XmlElement(name = "key")
     protected String key;
+
     @XmlElement(name = "successFlag")
     protected boolean successFlag;
 
@@ -33,4 +29,17 @@ public class RegisterLoginResult
     {
         this.successFlag = successFlag;
     }
+
+    public String getMessage()
+    {
+        return message;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
+
+    @XmlElement(name = "message")
+    protected String message;
 }

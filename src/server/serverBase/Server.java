@@ -69,6 +69,7 @@ public class Server
                     break;
                 case "shutdown":
                     flag = false;
+                    logger.info("shutting down");
                     break;
                 default:
                     logger.info("Invalid Command.");

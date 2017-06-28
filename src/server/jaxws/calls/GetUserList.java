@@ -1,31 +1,31 @@
 package server.jaxws.calls;
 
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
-import server.jaxws.beans.wrappers.RegisterLoginResult;
+import server.jaxws.beans.wrappers.UserListResult;
 import server.jaxws.calls.templates.RPCCalls;
 import server.model.User;
 import server.model.UserDao;
 
 import java.util.concurrent.Callable;
 
-public class registerLogin implements Callable<RegisterLoginResult>
+public class GetUserList implements Callable<UserListResult>
 {
     private final RegisterLoginInfo input;
 
-    public registerLogin(RegisterLoginInfo input)
+    public GetUserList(RegisterLoginInfo input)
     {
         this.input = input;
     }
 
 
     @Override
-    public RegisterLoginResult call() throws Exception
+    public UserListResult call() throws Exception
     {
         String fcmkey = input.getKey();
         String username = input.getUserName();
         String password = input.getPassword();
 
-        RegisterLoginResult rlr = new RegisterLoginResult();
+        UserListResult rlr = new UserListResult();
         rlr.setKey(fcmkey);
         rlr.setSuccessFlag(false);
 

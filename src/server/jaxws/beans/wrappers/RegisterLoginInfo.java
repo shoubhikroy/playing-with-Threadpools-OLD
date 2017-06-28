@@ -1,4 +1,6 @@
-package server.jaxws.beans;
+package server.jaxws.beans.wrappers;
+
+import server.jaxws.beans.templates.beanBaseInput;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,24 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RegisterLoginInfo")
-public class RegisterLoginInfo
+public class RegisterLoginInfo extends beanBaseInput
 {
-    @XmlElement(name = "key")
-    protected String key;
     @XmlElement(name = "userName")
     protected String userName;
     @XmlElement(name = "password")
     protected String password;
-
-    public String getKey()
-    {
-        return key;
-    }
-
-    public void setKey(String key)
-    {
-        this.key = key;
-    }
 
     public String getUserName()
     {
