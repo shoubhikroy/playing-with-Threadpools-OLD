@@ -28,7 +28,7 @@ public class registerLogin implements Callable<RegisterLoginResult>
         RegisterLoginResult rlr = new RegisterLoginResult();
         rlr.setKey(fcmkey);
         rlr.setSuccessFlag(false);
-
+        rlr.setMessage("error");
         //check if user exists
         UserDao userDao = UserDao.getInstance();
         User user = userDao.getUserById(userDao.checkUserExistsReturnId(username, password));
@@ -40,6 +40,7 @@ public class registerLogin implements Callable<RegisterLoginResult>
                 //create user
                 user = userDao.createUser(username, password, fcmkey, 0, 0);
                 rlr.setSuccessFlag(true);
+                rlr.setMessage("user created");
             }
         }
         //if user exists
@@ -49,6 +50,7 @@ public class registerLogin implements Callable<RegisterLoginResult>
             user.setFcmkey(fcmkey);
             user.save();
             rlr.setSuccessFlag(true);
+            rlr.setMessage("login success");
         }
         return rlr;
     }
