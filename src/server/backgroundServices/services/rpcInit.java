@@ -1,4 +1,4 @@
-package server.subSystems.backgroundServices;
+package server.backgroundServices.services;
 
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
 

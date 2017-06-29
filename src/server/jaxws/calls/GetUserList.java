@@ -2,15 +2,15 @@ package server.jaxws.calls;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import server.backgroundServices.BackgroundServices;
 import server.cache.BGServicesThreadPool;
-import server.cache.RPCThreadPool;
 import server.jaxws.beans.bUser;
 import server.jaxws.beans.bUserList;
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
 import server.jaxws.beans.wrappers.UserListResult;
 import server.model.User;
 import server.model.UserDao;
-import server.subSystems.backgroundServices.rpcInit;
+import server.backgroundServices.services.rpcInit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class getUserList implements Callable<UserListResult>
         Logger logger = LoggerFactory.getLogger(getUserList.class);
         ulr.setSuccessFlag(false);
 
-        boolean auth = BGServicesThreadPool.getInstance().getThreadPool().submit(new rpcInit(input)).get();
+        boolean auth = BackgroundServices.getInstance().inniateRPC(input);
         if (!auth)
         {
             logger.info("rpcInitFailed");

@@ -1,4 +1,4 @@
-package server.subSystems.activeUsers;
+package server.serverBase.subSystems.activeUsers;
 
 public class ActiveUserList
 {
