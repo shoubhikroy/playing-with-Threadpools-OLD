@@ -22,7 +22,7 @@ public class UserDao extends ObjectDao
         return ourInstance;
     }
 
-    public User createUser(String username, String password, String fcmkey, int wins, int losses) throws SQLException
+    public User createUser(String username, String password, String fcmkey, int wins, int losses, int lastlogin) throws SQLException
     {
         Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
         PreparedStatement preparedStatement = (PreparedStatement) dbcon.prepareStatement("SELECT MAX(userId) AS userId FROM t_user");
@@ -38,50 +38,63 @@ public class UserDao extends ObjectDao
         preparedStatement.close();
         dbcon.close();
 
-        User user = new User(userId, username, password, fcmkey, wins, losses);
+        User user = new User(userId, username, password, fcmkey, wins, losses, lastlogin);
         user.create();
         return user;
     }
 
-    public User getUserById(Integer userId) throws SQLException
+    public User getUserById(Integer userId)
     {
-        Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
-        PreparedStatement preparedStatement = (PreparedStatement) dbcon.prepareStatement("select username,password,fcmkey,wins,losses from t_user where userId = ?;\n");
         User user = null;
-        preparedStatement.setInt(1, userId);
-
-        int resLength = 0;
-        ResultSet rs = preparedStatement.executeQuery();
-
-        logger.info("Select statement executed, " + resLength + " rows retrieved");
-
-        while (rs.next())
+        try
         {
-            resLength++;
-            user = new User(userId, rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses"));
+            Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
+            PreparedStatement preparedStatement = (PreparedStatement) dbcon.prepareStatement("select username,password,fcmkey,wins,losses,lastlogin from t_user where userId = ?;\n");
+
+            preparedStatement.setInt(1, userId);
+
+            int resLength = 0;
+            ResultSet rs = preparedStatement.executeQuery();
+
+            logger.info("Select statement executed, " + resLength + " rows retrieved");
+
+            while (rs.next())
+            {
+                resLength++;
+                user = new User(userId, rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses"), rs.getInt("lastlogin"));
+            }
+            preparedStatement.close();
+            dbcon.close();
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
         }
-        preparedStatement.close();
-        dbcon.close();
         return user;
     }
 
-    public HashMap<Integer, User> getAllUsers() throws SQLException
+    public HashMap<Integer, User> getAllUsers()
     {
-        Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
-        PreparedStatement preparedStatement = (PreparedStatement) dbcon.prepareStatement("select * from t_user;\n");
-        int resLength = 0;
-        ResultSet rs = preparedStatement.executeQuery();
-        logger.info("Select statement executed, " + resLength + " rows retrieved");
-
         HashMap<Integer, User> users = new HashMap<>();
-        while (rs.next())
+        try
         {
-            resLength++;
-            users.put(rs.getInt("userId"), new User(rs.getInt("userId"), rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses")));
+            Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
+            PreparedStatement preparedStatement = (PreparedStatement) dbcon.prepareStatement("select * from t_user;\n");
+            int resLength = 0;
+            ResultSet rs = preparedStatement.executeQuery();
+            logger.info("Select statement executed, " + resLength + " rows retrieved");
+
+            while (rs.next())
+            {
+                resLength++;
+                users.put(rs.getInt("userId"), new User(rs.getInt("userId"), rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses"), rs.getInt("lastlogin")));
+            }
+            //close everything
+            preparedStatement.close();
+            dbcon.close();
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
         }
-        //close everything
-        preparedStatement.close();
-        dbcon.close();
         return users;
     }
 
@@ -100,7 +113,7 @@ public class UserDao extends ObjectDao
             while (rs.next())
             {
                 resLength++;
-                user = new User(userId, rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses"));
+                user = new User(userId, rs.getString("username"), rs.getString("password"), rs.getString("fcmkey"), rs.getInt("wins"), rs.getInt("losses"), rs.getInt("lastlogin"));
             }
             logger.info("Select statement executed, " + resLength + " rows retrieved");
 

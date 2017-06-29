@@ -1,13 +1,9 @@
 package server.model.templates;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import server.cache.ConnectionPool;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 
 public abstract class baseObject implements Serializable
 {
@@ -20,12 +16,12 @@ public abstract class baseObject implements Serializable
 
     }
 
-    protected int getuserId()
+    public int getuserId()
     {
         return userId;
     }
 
-    protected void setuserId(Integer userId)
+    public void setuserId(Integer userId)
     {
         this.userId = userId;
     }

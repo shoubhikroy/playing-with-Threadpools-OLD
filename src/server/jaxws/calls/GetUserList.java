@@ -1,18 +1,28 @@
 package server.jaxws.calls;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import server.cache.BGServicesThreadPool;
+import server.cache.RPCThreadPool;
+import server.jaxws.beans.bUser;
+import server.jaxws.beans.bUserList;
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
 import server.jaxws.beans.wrappers.UserListResult;
-import server.jaxws.calls.templates.RPCCalls;
 import server.model.User;
 import server.model.UserDao;
+import server.subSystems.backgroundServices.rpcInit;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
-public class GetUserList implements Callable<UserListResult>
+public class getUserList implements Callable<UserListResult>
 {
     private final RegisterLoginInfo input;
 
-    public GetUserList(RegisterLoginInfo input)
+    public getUserList(RegisterLoginInfo input)
     {
         this.input = input;
     }
@@ -21,35 +31,43 @@ public class GetUserList implements Callable<UserListResult>
     @Override
     public UserListResult call() throws Exception
     {
-        String fcmkey = input.getKey();
-        String username = input.getUserName();
-        String password = input.getPassword();
+        UserListResult ulr = new UserListResult();
+        Logger logger = LoggerFactory.getLogger(getUserList.class);
+        ulr.setSuccessFlag(false);
 
-        UserListResult rlr = new UserListResult();
-        rlr.setKey(fcmkey);
-        rlr.setSuccessFlag(false);
+        boolean auth = BGServicesThreadPool.getInstance().getThreadPool().submit(new rpcInit(input)).get();
+        if (!auth)
+        {
+            logger.info("rpcInitFailed");
+            ulr.setMessage("rpcInitFailed");
+            return ulr;
+        }
 
-        //check if user exists
-        UserDao userDao = UserDao.getInstance();
-        User user = userDao.getUserById(userDao.checkUserExistsReturnId(username, password));
-        //if new user
-        if (null == user)
+        ArrayList<bUser> bUList = new ArrayList<>();
+        HashMap<Integer, User> userList = UserDao.getInstance().getAllUsers();
+        Iterator it = userList.entrySet().iterator();
+        while (it.hasNext())
         {
-            if (userDao.checkUserExistsReturnId(username) == -1)
-            {
-                //create user
-                user = userDao.createUser(username, password, fcmkey, 0, 0);
-                rlr.setSuccessFlag(true);
-            }
+            Map.Entry pair = (Map.Entry) it.next();
+            User u = (User) pair.getValue();
+
+            bUser bU = new bUser();
+
+            bU.setOnline(false);
+            bU.setUsername(u.getUsername());
+            bU.setUserid(u.getuserId());
+            bU.setGameActive(false);
+
+            bUList.add(bU);
+            it.remove();
         }
-        //if user exists
-        else
-        {
-            //update key, and return success
-            user.setFcmkey(fcmkey);
-            user.save();
-            rlr.setSuccessFlag(true);
-        }
-        return rlr;
+
+        //bind the list
+        bUserList userListBinding = new bUserList();
+        userListBinding.userlist = bUList;
+        ulr.userlist = userListBinding;
+        ulr.setSuccessFlag(true);
+        ulr.setMessage("fullUserList");
+        return ulr;
     }
 }

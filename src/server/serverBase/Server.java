@@ -5,6 +5,7 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import server.cache.BGServicesThreadPool;
 import server.cache.ConnectionPool;
 import server.cache.FCMThreadPool;
 import server.cache.RPCThreadPool;
@@ -22,6 +23,7 @@ public class Server
     ConnectionPool cp;
     RPCThreadPool rp;
     FCMThreadPool fp;
+    BGServicesThreadPool bp;
     Logger logger = LoggerFactory.getLogger(Server.class);
     private Thread jaxws;
 
@@ -39,13 +41,19 @@ public class Server
         logger.info("created connection pool");
 
         //RPC Callable Pool:
+        //# of calls
         rp = RPCThreadPool.getInstance();
-        rp.setThreadPool(Executors.newFixedThreadPool(5));
+        rp.setThreadPool(Executors.newFixedThreadPool(2));
         logger.info("created RPCThreadPool");
 
         //FCM Runnable Pool:
         fp = FCMThreadPool.getInstance();
-        fp.setThreadPool(Executors.newFixedThreadPool(5));
+        fp.setThreadPool(Executors.newFixedThreadPool(4));
+        logger.info("created FCMThreadPool");
+
+        //BG Services Pool
+        bp = BGServicesThreadPool.getInstance();
+        bp.setThreadPool(Executors.newFixedThreadPool(4));
         logger.info("created FCMThreadPool");
     }
 
