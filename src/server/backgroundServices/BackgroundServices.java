@@ -4,7 +4,7 @@ import server.backgroundServices.services.authInput;
 import server.backgroundServices.services.updateActiveUsers;
 import server.backgroundServices.services.updateFCMKey;
 import server.cache.BGServicesThreadPool;
-import server.jaxws.beans.wrappers.RegisterLoginInfo;w
+import server.jaxws.beans.wrappers.RegisterLoginInfo;
 
 import java.util.concurrent.ExecutionException;
 
