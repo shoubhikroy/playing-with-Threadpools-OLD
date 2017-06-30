@@ -20,7 +20,12 @@ public class updateFCMKey implements Callable<Boolean>
     @Override
     public Boolean call() throws Exception
     {
-        // update FCM Keya
+        UserDao userDao = UserDao.getInstance();
+        User user = userDao.getUserFromInput(input);
+        if (user == null)
+            return false;
+        user.setFcmkey(input.getKey());
+        user.save();
         return true;
     }
 }

@@ -3,6 +3,7 @@ package server.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import server.cache.ConnectionPool;
+import server.jaxws.beans.wrappers.RegisterLoginInfo;
 import server.model.templates.ObjectDao;
 
 import java.sql.ResultSet;
@@ -145,6 +146,14 @@ public class UserDao extends ObjectDao
         preparedStatement.close();
         dbcon.close();
         return userId == -1 ? -1 : userId;
+    }
+
+    public User getUserFromInput(RegisterLoginInfo input) throws SQLException
+    {
+        String key = input.getKey();
+        String username = input.getUserName();
+        String password = input.getPassword();
+        return getUserById(checkUserExistsReturnId(username, password));
     }
 
     public Integer checkUserExistsReturnId(String username) throws SQLException
