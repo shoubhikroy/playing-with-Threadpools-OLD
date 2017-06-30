@@ -33,7 +33,7 @@ public class Server
         //BoneCP Connection Pool:
         Class.forName("com.mysql.jdbc.Driver");
         config = new BoneCPConfig();
-        config.setJdbcUrl("jdbc:mysql://104.236.229.251:3306/card?useSSL=false");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/card?useSSL=false");
         config.setUsername("XAR");
         config.setPassword("barb");
         cp = ConnectionPool.getInstance();
@@ -54,7 +54,7 @@ public class Server
         //BG Services Pool
         bp = BGServicesThreadPool.getInstance();
         bp.setThreadPool(Executors.newFixedThreadPool(4));
-        logger.info("created FCMThreadPool");
+        logger.info("created BGServicesThreadPool");
     }
 
     public void start() throws IOException

@@ -9,6 +9,7 @@ import server.jaxws.beans.wrappers.RegisterLoginInfo;
 import server.jaxws.beans.wrappers.UserListResult;
 import server.model.User;
 import server.model.UserDao;
+import server.serverBase.subSystems.activeUsers.ActiveUserList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class getUserList implements Callable<UserListResult>
 
             bUser bU = new bUser();
 
-            bU.setOnline(false);
+            bU.setOnline(ActiveUserList.getInstance().isUserActive(u));
             bU.setUsername(u.getUsername());
             bU.setUserid(u.getuserId());
             bU.setGameActive(false);
