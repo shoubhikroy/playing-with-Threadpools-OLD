@@ -2,11 +2,13 @@ package server.backgroundServices;
 
 import server.backgroundServices.services.authInput;
 import server.backgroundServices.services.loginTimeout;
-import server.backgroundServices.services.updateActiveUsers;
 import server.backgroundServices.services.updateFCMKey;
 import server.cache.BGServicesThreadPool;
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
+import server.model.UserDao;
+import server.serverBase.subSystems.activeUsers.ActiveUserList;
 
+import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
 public class BackgroundServices
@@ -22,7 +24,7 @@ public class BackgroundServices
     {
     }
 
-    public String rpcInit(RegisterLoginInfo input) throws ExecutionException, InterruptedException
+    public String rpcInit(RegisterLoginInfo input) throws ExecutionException, InterruptedException, SQLException
     {
         if (!authInput(input))
             return "auth failed";
@@ -45,9 +47,10 @@ public class BackgroundServices
         return BGServicesThreadPool.getInstance().getThreadPool().submit(new updateFCMKey(input)).get();
     }
 
-    public boolean updateActiveUsers(RegisterLoginInfo input) throws ExecutionException, InterruptedException
+    public boolean updateActiveUsers(RegisterLoginInfo input) throws ExecutionException, InterruptedException, SQLException
     {
-        return BGServicesThreadPool.getInstance().getThreadPool().submit(new updateActiveUsers(input)).get();
+        ActiveUserList.getInstance().addUser(UserDao.getInstance().getUserFromInput(input));
+        return true;
     }
 
     public boolean loginTimeout(RegisterLoginInfo input) throws ExecutionException, InterruptedException
