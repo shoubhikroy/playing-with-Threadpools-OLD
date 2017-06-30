@@ -1,14 +1,17 @@
 package server.backgroundServices.services;
 
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
+import server.jaxws.beans.wrappers.RegisterLoginResult;
+import server.model.User;
+import server.model.UserDao;
 
 import java.util.concurrent.Callable;
 
-public class rpcInit implements Callable<Boolean>
+public class getActiveUsers implements Callable<Boolean>
 {
     private final RegisterLoginInfo input;
 
-    public rpcInit(RegisterLoginInfo input)
+    public getActiveUsers(RegisterLoginInfo input)
     {
         this.input = input;
     }
@@ -17,9 +20,7 @@ public class rpcInit implements Callable<Boolean>
     @Override
     public Boolean call() throws Exception
     {
-        // auth the user
-        // check last login
-        // move in and out of active
+        // update FCM Keya
         return true;
     }
 }

@@ -1,11 +1,11 @@
 package server.backgroundServices;
 
-import server.backgroundServices.services.rpcInit;
+import server.backgroundServices.services.authInput;
+import server.backgroundServices.services.updateActiveUsers;
+import server.backgroundServices.services.updateFCMKey;
 import server.cache.BGServicesThreadPool;
-import server.jaxws.beans.wrappers.RegisterLoginInfo;
-import server.model.User;
+import server.jaxws.beans.wrappers.RegisterLoginInfo;w
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class BackgroundServices
@@ -21,8 +21,18 @@ public class BackgroundServices
     {
     }
 
-    public boolean inniateRPC(RegisterLoginInfo input) throws ExecutionException, InterruptedException
+    public boolean authInput(RegisterLoginInfo input) throws ExecutionException, InterruptedException
     {
-        return BGServicesThreadPool.getInstance().getThreadPool().submit(new rpcInit(input)).get();
+        return BGServicesThreadPool.getInstance().getThreadPool().submit(new authInput(input)).get();
+    }
+
+    public boolean updateFCMKey(RegisterLoginInfo input) throws ExecutionException, InterruptedException
+    {
+        return BGServicesThreadPool.getInstance().getThreadPool().submit(new updateFCMKey(input)).get();
+    }
+
+    public boolean updateActiveUsers(RegisterLoginInfo input) throws ExecutionException, InterruptedException
+    {
+        return BGServicesThreadPool.getInstance().getThreadPool().submit(new updateActiveUsers(input)).get();
     }
 }
