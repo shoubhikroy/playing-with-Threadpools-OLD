@@ -1,5 +1,6 @@
 package server.jaxws.calls;
 
+import server.backgroundServices.BackgroundServices;
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
 import server.jaxws.beans.wrappers.RegisterLoginResult;
 import server.model.User;
@@ -38,6 +39,7 @@ public class registerLogin implements Callable<RegisterLoginResult>
             {
                 //create user
                 user = userDao.createUser(username, password, fcmkey, 0, 0, (int) java.time.Instant.now().getEpochSecond());
+                BackgroundServices.getInstance().updateActiveUsers(input);
                 rlr.setSuccessFlag(true);
                 rlr.setMessage("user created");
             }
@@ -46,6 +48,7 @@ public class registerLogin implements Callable<RegisterLoginResult>
         else
         {
             //update key, and return success
+            BackgroundServices.getInstance().updateActiveUsers(input);
             user.setFcmkey(fcmkey);
             user.setLastLogin((int) java.time.Instant.now().getEpochSecond());
             user.save();
