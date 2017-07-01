@@ -101,8 +101,8 @@ public class User extends baseObject
             preparedStatement.setString(3, fcmkey);
             preparedStatement.setInt(4, wins);
             preparedStatement.setInt(5, losses);
-            preparedStatement.setInt(6, userId);
-            preparedStatement.setInt(7, lastLogin);
+            preparedStatement.setInt(6, lastLogin);
+            preparedStatement.setInt(7, userId);
             preparedStatement.executeUpdate();
             logger.info("user saved");
 

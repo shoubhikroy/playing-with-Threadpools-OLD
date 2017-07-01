@@ -23,5 +23,6 @@ public class updateActiveUser implements Runnable
     {
         ActiveUserList.getInstance().pruneList();
         ActiveUserList.getInstance().getActiveUserList().put(u.getuserId(), new activeUser(u));
+        ActiveUserList.getInstance().getActiveUserId().add(u.getuserId());
     }
 }
