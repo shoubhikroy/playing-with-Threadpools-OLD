@@ -34,7 +34,7 @@ public class getUserList implements Callable<UserListResult>
         Logger logger = LoggerFactory.getLogger(getUserList.class);
         ulr.setSuccessFlag(false);
         String rpcInit = BackgroundServices.getInstance().rpcInit(input);
-        if (rpcInit.equals("rpcInit passed"))
+        if (!rpcInit.equals("rpcInit passed"))
         {
             logger.info("rpcInitFailed: " + rpcInit);
             ulr.setMessage("rpcInitFailed: " + rpcInit);
