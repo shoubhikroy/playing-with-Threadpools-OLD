@@ -19,7 +19,7 @@ public class FCMBroadcaster
 {
     private static FCMBroadcaster ourInstance = new FCMBroadcaster();
     FcmMessageOptions options;
-    String defaultPropertiesLocationString = /*System.getProperty("user.home") + */"fcmjava.properties";
+    String defaultPropertiesLocationString = System.getProperty("user.home") + "/fcmjava.properties";
     Path defaultPropertiesLocationPath = FileSystems.getDefault().getPath(defaultPropertiesLocationString, new String[0]);
     FcmClient client;
     private FCMBroadcaster()
@@ -86,13 +86,23 @@ public class FCMBroadcaster
         return FCMThreadPool.getInstance().getThreadPool().submit(new NotificationUnicastMsg(options, to, notificationPayload)).get();
     }
 
-    public FcmMessageResponse sendNotificationUnicastMsg(String to, String title, String body) throws ExecutionException, InterruptedException
+    public FcmMessageResponse sendNotificationUnicastMsg(String to, String title, String body)
     {
         NotificationPayload np = NotificationPayload.builder()
                 .setTitle(title)
                 .setBody(body)
                 .build();
-        return sendNotificationUnicastMsg(to, np);
+        try
+        {
+            return sendNotificationUnicastMsg(to, np);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        } catch (ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private FcmMessageResponse sendNotificationMulticastNotificationMsg(List<String> keySet, NotificationPayload notificationPayload) throws InterruptedException, ExecutionException

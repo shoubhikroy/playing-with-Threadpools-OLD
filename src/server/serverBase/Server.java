@@ -3,18 +3,25 @@ package server.serverBase;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import de.bytefish.fcmjava.responses.FcmMessageResponse;
+import de.bytefish.fcmjava.responses.FcmMessageResultItem;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import server.broadcasts.FCMBroadcaster;
 import server.cache.BGServicesThreadPool;
 import server.cache.ConnectionPool;
 import server.cache.FCMThreadPool;
 import server.cache.RPCThreadPool;
 import server.jaxws.JAXWSEndpoint;
+import server.model.User;
+import server.model.UserDao;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 public class Server
@@ -69,16 +76,40 @@ public class Server
         {
             logger.info("Input Command: ");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String command = br.readLine();
-            switch (command)
+            String input = br.readLine();
+            String[] inputs = input.split(" ");
+            switch (inputs[0])
             {
                 case "help":
                     logger.info("Available Commands:");
-                    logger.info("shutdown - close pools and exit:");
+                    logger.info("shutdown - close pools and exit");
+                    logger.info("sendfcm - usage: sendfcm username msg");
                     break;
                 case "shutdown":
                     flag = false;
                     logger.info("shutting down");
+                    break;
+                case "sendfcm":
+                    UserDao uDao = UserDao.getInstance();
+                    User u = uDao.getUserFromUserName(inputs[1]);
+                    if (u != null)
+                    {
+                        FcmMessageResponse fmr = FCMBroadcaster.getInstance().sendNotificationUnicastMsg(u.getFcmkey(), "MsgSentTime:" + java.time.Instant.now().getEpochSecond(), inputs[2]);
+                        // Assert Results:
+                        Assert.assertNotNull(fmr);
+
+                        // Make sure there are no errors:
+                        Assert.assertNotNull(fmr.getResults());
+                        List<FcmMessageResultItem> x = fmr.getResults();
+                        for (FcmMessageResultItem fri : x)
+                        {
+                            Assert.assertNotNull(fri.getMessageId());
+                            Assert.assertNull(fri.getErrorCode());
+                            logger.info("resultMsgCode:" + fri.getMessageId());
+                            if (null != fri.getErrorCode())
+                                logger.info("ifError:" + fri.getErrorCode());
+                        }
+                    }
                     break;
                 default:
                     logger.info("Invalid Command.");

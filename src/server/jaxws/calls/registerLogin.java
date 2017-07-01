@@ -31,11 +31,11 @@ public class registerLogin implements Callable<RegisterLoginResult>
         rlr.setMessage("error");
         //check if user exists
         UserDao userDao = UserDao.getInstance();
-        User user = userDao.getUserById(userDao.checkUserExistsReturnId(username, password));
+        User user = userDao.getUserById(userDao.checkUserPasswordExistsReturnId(username, password));
         //if new user
         if (null == user)
         {
-            if (userDao.checkUserExistsReturnId(username) == -1)
+            if (userDao.checkUserPasswordExistsReturnId(username) == -1)
             {
                 //create user
                 user = userDao.createUser(username, password, fcmkey, 0, 0, (int) java.time.Instant.now().getEpochSecond());

@@ -1,7 +1,6 @@
 package server.backgroundServices.services;
 
 import server.jaxws.beans.wrappers.RegisterLoginInfo;
-import server.model.User;
 import server.model.UserDao;
 
 import java.util.concurrent.Callable;
@@ -24,7 +23,7 @@ public class authInput implements Callable<Boolean>
         String username = input.getUserName();
         String password = input.getPassword();
         UserDao userDao = UserDao.getInstance();
-        int userid = userDao.checkUserExistsReturnId(username,password);
+        int userid = userDao.checkUserPasswordExistsReturnId(username,password);
 
         if (userid > -1)
             return true;

@@ -102,7 +102,7 @@ public class UserDao extends ObjectDao
     public User getUserByUsernamePassword(String username, String password) throws SQLException
     {
         Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
-        int userid = checkUserExistsReturnId(username, password);
+        int userid = checkUserPasswordExistsReturnId(username, password);
         User user = null;
         if (userid > -1)
         {
@@ -125,7 +125,7 @@ public class UserDao extends ObjectDao
         return user;
     }
 
-    public Integer checkUserExistsReturnId(String username, String password) throws SQLException
+    public Integer checkUserPasswordExistsReturnId(String username, String password) throws SQLException
     {
         Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
         String selectString = "select userId from t_user where username = ? and password = ?;\n";
@@ -153,10 +153,10 @@ public class UserDao extends ObjectDao
         String key = input.getKey();
         String username = input.getUserName();
         String password = input.getPassword();
-        return getUserById(checkUserExistsReturnId(username, password));
+        return getUserById(checkUserPasswordExistsReturnId(username, password));
     }
 
-    public Integer checkUserExistsReturnId(String username) throws SQLException
+    public Integer checkUserPasswordExistsReturnId(String username) throws SQLException
     {
         Connection dbcon = (Connection) ConnectionPool.getInstance().getConnectionPool().getConnection();
         String selectString = "select userId from t_user where username = ?;\n";
@@ -176,5 +176,17 @@ public class UserDao extends ObjectDao
         preparedStatement.close();
         dbcon.close();
         return userId == -1 ? -1 : userId;
+    }
+
+    public User getUserFromUserName(String username)
+    {
+        try
+        {
+            return getUserById(checkUserPasswordExistsReturnId(username));
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

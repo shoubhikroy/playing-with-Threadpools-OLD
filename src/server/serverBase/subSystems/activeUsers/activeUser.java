@@ -18,9 +18,10 @@ public class activeUser
         return activeTime;
     }
 
-    public void setActiveTime(long activeTime)
+    public void resetActiveTime()
     {
-        this.activeTime = activeTime;
+        this.activeTime = java.time.Instant.now().getEpochSecond();
+        ;
     }
 
     public User getuser()
