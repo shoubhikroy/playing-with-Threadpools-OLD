@@ -17,11 +17,16 @@ public class ActiveUserList
 
     public static ActiveUserList getInstance()
     {
-        return ourInstance;
+        return MyWrapper.INSTANCE;
     }
 
-    public ActiveUserList()
+    private ActiveUserList()
     {
+    }
+
+    private static class MyWrapper
+    {
+        static ActiveUserList INSTANCE = new ActiveUserList();
     }
 
 
@@ -36,6 +41,17 @@ public class ActiveUserList
     }
 
     Map<Integer, activeUser> activeUserList = Collections.synchronizedMap(new HashMap<>());
+    List<Integer> activeUserId = Collections.synchronizedList(new ArrayList<>());
+
+    public List<Integer> getActiveUserId()
+    {
+        return activeUserId;
+    }
+
+    public void setActiveUserId(List<Integer> activeUserId)
+    {
+        this.activeUserId = activeUserId;
+    }
 
     Logger logger = LoggerFactory.getLogger(ActiveUserList.class);
 
@@ -43,20 +59,17 @@ public class ActiveUserList
     {
         logger.info("pruneList");
         //iterate through hashmap and remote all users that have a time difference greater than currenttime - activetime
-        Iterator it = activeUserList.entrySet().iterator();
-        while (it.hasNext())
+        for (int i = 0; i < activeUserId.size(); i++)
         {
-            Map.Entry pair = (Map.Entry) it.next();
-            activeUser aU = (activeUser) pair.getValue();
+            activeUser aU = activeUserList.get(activeUserId.get(i));
             long activeTime = aU.getActiveTime();
             long currentTime = java.time.Instant.now().getEpochSecond();
             long difference = currentTime - activeTime;
             if (difference > 300)
             {
-                //remove from hashmap
-                activeUserList.remove(pair.getKey());
+                activeUserList.remove(activeUserId.get(i));
+                activeUserId.remove(i);
             }
-            it.remove();
         }
     }
 
