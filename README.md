@@ -15,8 +15,8 @@ functionality added so far:<br>
    * isUserActive<br>
    * updateActiveUser<br>
  * cli means to use FCM<br>
-  * user registration and interaction resets FCM key for user<br>
-  * can send msg/notification to user using username directly
+   * user registration and interaction resets FCM key for user<br>
+   * can send msg/notification to user using username directly
 <br><br>
 TODO:<br>
 soap*>rest (NO MORE XML!)<br>
