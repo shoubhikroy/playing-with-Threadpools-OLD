@@ -1,14 +1,27 @@
-Client
-Idea is to have a simple client for a multiplayer card game. Client should sets up a table which can lay cards at certain locations on the table. Cards can be flipped or turned. the client can only see the content of their own cards, opponent cards should be hidden unless opponent flips them. Client should allow registration of a user and allow users to create lobbies and start games. Lobbies will contain the two gamers and observers. Game information should be relayed to the users in lobbies. Observers should be able to see the contents of both gamer's cards, etc.
+Server:<br>
+Should be a proper app server handling card game data using fcm and rest/soap. Should store the states of the ACTIVE games in cache. All other information in DB. Should handle all the serialization of states to db.
+the authenticated clients should be able to make calls to request game state data.
+<br>
+Soap RPC:
+get userList
+login/register
 
-Currently:
-Just a bunch of screens to register and login as a user
-	with relevant soap handles
+functionality added so far:
+-communication of errors via a base msg
+-user login
+-user registration
+-active user list
+    -getAllUsers
+    -isUserActive
+    -updateActiveUser
++cli means to use FCM
+    -user registration and interaction resets FCM key for user
+    can send msg/notification to user using username directly
 
 TODO:
-lobby system screens
-game system screens
-handle rpc timeouts
-post login menu (slideout?)
-better ui struture
-remove all the bulky soap beans and replace iwth json objects
+soap->rest (NO MORE XML!)
+set up hibernate to get rid of current horrid orm
+-activeLobbies (gamers, viewers - flag using
+-activeGames
+
+
