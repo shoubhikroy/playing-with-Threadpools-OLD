@@ -7,16 +7,16 @@ get userList<br>
 login/register<br>
 
 functionality added so far:<br>
--communication of errors via a base msg<br>
--user login<br>
--user registration<br>
--active user list<br>
-    -getAllUsers<br>
-    -isUserActive<br>
-    -updateActiveUser<br>
-+cli means to use FCM<br>
-    -user registration and interaction resets FCM key for user<br>
-    -can send msg/notification to user using username directly
+ - communication of errors via a base msg<br>
+ - user login<br>
+ - user registration<br>
+ - active user list<br>
+  - getAllUsers<br>
+  - isUserActive<br>
+  - updateActiveUser<br>
+ - cli means to use FCM<br>
+  - user registration and interaction resets FCM key for user<br>
+  - can send msg/notification to user using username directly
 <br><br>
 TODO:<br>
 soap->rest (NO MORE XML!)<br>
