@@ -1,5 +1,4 @@
 # server
-Server:<br>
 Should be a proper app server handling card game data using fcm and rest/soap. Should store the states of the ACTIVE games in cache. All other information in DB. Should handle all the serialization of states to db.
 the authenticated clients should be able to make calls to request game state data.
 <br>
