@@ -20,9 +20,9 @@ functionality added so far:<br>
 
 <br><br>
 TODO:<br>
-soap*>rest (NO MORE XML!)<br>
+soap->rest (NO MORE XML!)<br>
 set up hibernate to get rid of current horrid orm<br>
-*activeLobbies (gamers, viewers * flag using<br>
-*activeGames<br>
+activeLobbies (gamers, viewers * flag using<br>
+activeGames<br>
 
 
